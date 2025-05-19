@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "464655144018",
+    "project_id": "kagcoffee-91ed7",
+    "storage_bucket": "kagcoffee-91ed7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:464655144018:android:719307a8290f57a2713b8b",
+        "android_client_info": {
+          "package_name": "com.example.kagcoffee"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB6sQCso4O82GenYWeoRNM8GJlj9_LSg5A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
