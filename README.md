@@ -13,6 +13,12 @@
 - **User-Friendly Interface:** Intuitive design tailored for seamless navigation on mobile devices.
 - **Cross-Platform Compatibility:** Built using Flutter, ensuring smooth performance on both Android and iOS.
 
+## Design Process
+
+- Developed interactive UI mockups and storyboards to model key user flows, including social media interaction and ordering.
+- Incorporated client and peer feedback during design and implementation phases.
+- Tools used: Balsamiq (prototyping), Flutter & Dart (development).
+
 ## Technologies Used
 
 - **Flutter** – For building natively compiled applications for mobile from a single codebase.
