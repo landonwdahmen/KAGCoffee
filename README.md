@@ -56,7 +56,17 @@ To run this project locally:
 
 ## Screenshots
 
-*Add screenshots of the app here to showcase its interface and features.*
+| Login/Register | Home | Forum/Discussion | Create Post |
+|---|---|---|---|
+| ![Login/Register](screenshots/login.png) | ![Home](screenshots/home.png) | ![Discussion](screenshots/discussion.png) | ![Create Post](screenshots/create_post.png) |
+
+| Individual Post | Search | Order | Checkout |
+|---|---|---|---|
+| ![Individual Post](screenshots/individual_post.png) | ![Search](screenshots/search.png) | ![Order](screenshots/order.png) | ![Checkout](screenshots/checkout.png) |
+
+| Account | Contact |
+|---|---|
+| ![Account](screenshots/account.png) | ![Contact](screenshots/contact.png) |
 
 ## License
 
