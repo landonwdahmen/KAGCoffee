@@ -18,7 +18,8 @@ class _EditAccountPageState extends State<EditAccountPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
@@ -28,10 +29,11 @@ class _EditAccountPageState extends State<EditAccountPage> {
   Future<void> _loadAccountInfo() async {
     final currentUser = FirebaseAuth.instance.currentUser;
     if (currentUser != null) {
-      final DocumentSnapshot doc = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(currentUser.uid)
-          .get();
+      final DocumentSnapshot doc =
+          await FirebaseFirestore.instance
+              .collection('users')
+              .doc(currentUser.uid)
+              .get();
       if (doc.exists) {
         userData = doc.data() as Map<String, dynamic>;
         setState(() {
@@ -56,8 +58,9 @@ class _EditAccountPageState extends State<EditAccountPage> {
       String newPassword = _passwordController.text.trim();
       String confirmPassword = _confirmPasswordController.text.trim();
       if (newPassword.isNotEmpty && newPassword != confirmPassword) {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(const SnackBar(content: Text('Passwords do not match.')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Passwords do not match.')),
+        );
         return;
       }
 
@@ -70,10 +73,6 @@ class _EditAccountPageState extends State<EditAccountPage> {
           'email': _emailController.text.trim(),
           'phone': _phoneController.text.trim(),
         };
-        if (newPassword.isNotEmpty) {
-          updateData['password'] = newPassword;
-        }
-
         try {
           await FirebaseFirestore.instance
               .collection('users')
@@ -84,12 +83,16 @@ class _EditAccountPageState extends State<EditAccountPage> {
             await currentUser.updatePassword(newPassword);
           }
 
+          if (!mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Profile updated successfully.')));
+            const SnackBar(content: Text('Profile updated successfully.')),
+          );
           Navigator.pop(context);
         } catch (e) {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text('Update failed: $e')));
+          if (!mounted) return;
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(SnackBar(content: Text('Update failed: $e')));
         }
       }
     }
@@ -226,7 +229,9 @@ class _EditAccountPageState extends State<EditAccountPage> {
                           isDense: true,
                           suffixIcon: IconButton(
                             icon: Icon(
-                              _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                              _obscurePassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                             ),
                             onPressed: () {
                               setState(() {
@@ -246,11 +251,14 @@ class _EditAccountPageState extends State<EditAccountPage> {
                           isDense: true,
                           suffixIcon: IconButton(
                             icon: Icon(
-                              _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
+                              _obscureConfirmPassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                             ),
                             onPressed: () {
                               setState(() {
-                                _obscureConfirmPassword = !_obscureConfirmPassword;
+                                _obscureConfirmPassword =
+                                    !_obscureConfirmPassword;
                               });
                             },
                           ),

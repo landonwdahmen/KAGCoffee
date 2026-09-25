@@ -1,5 +1,5 @@
 name: kagcoffee
-description: "A new Flutter project."
+description: "An academic Flutter and Firebase prototype for cafe ordering and community discussions."
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -32,7 +32,6 @@ dependencies:
     sdk: flutter
   firebase_auth: ^4.8.0
   firebase_core: ^2.16.0
-  firebase_database: ^10.0.0
   cloud_firestore: ^4.17.5
   mask_text_input_formatter: ^2.3.0
   firebase_app_check: ^0.2.2

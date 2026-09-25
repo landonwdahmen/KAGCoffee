@@ -14,16 +14,19 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _lastNameController = TextEditingController();
   final TextEditingController _screenNameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  
+
   final MaskTextInputFormatter phoneMaskFormatter = MaskTextInputFormatter(
     mask: '(###) ###-####',
     filter: {"#": RegExp(r'\d')},
   );
 
-  final RegExp passwordRegex = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$');
+  final RegExp passwordRegex = RegExp(
+    r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
+  );
   final RegExp emailRegex = RegExp(r'^[\w\.-]+@[\w\.-]+\.\w+$');
 
   bool _obscurePassword = true;
@@ -31,14 +34,18 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Future<void> _register() async {
     if (_passwordController.text != _confirmPasswordController.text) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Passwords do not match!')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Passwords do not match!')));
       return;
     }
     if (!passwordRegex.hasMatch(_passwordController.text)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Password must be at least 8 characters and include letters and at least one number.')),
+        const SnackBar(
+          content: Text(
+            'Password must be at least 8 characters and include letters and at least one number.',
+          ),
+        ),
       );
       return;
     }
@@ -56,10 +63,11 @@ class _RegisterPageState extends State<RegisterPage> {
     }
 
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: _emailController.text.trim(),
-        password: _passwordController.text,
-      );
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: _emailController.text.trim(),
+            password: _passwordController.text,
+          );
       String uid = userCredential.user!.uid;
 
       Map<String, dynamic> userData = {
@@ -70,13 +78,12 @@ class _RegisterPageState extends State<RegisterPage> {
         'phone': phoneMaskFormatter.getMaskedText(),
       };
 
-      // Print the data being sent to Firestore
-      print('Attempting to write user data to Firestore: $userData');
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(uid)
+          .set(userData);
 
-      await FirebaseFirestore.instance.collection('users').doc(uid).set(userData);
-
-      print('User successfully written to Firestore!');
-
+      if (!mounted) return;
       await showDialog(
         context: context,
         builder: (BuildContext context) {
@@ -96,10 +103,10 @@ class _RegisterPageState extends State<RegisterPage> {
         },
       );
     } catch (e) {
-      print('Registration failed: $e');
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Registration failed: $e')),
-      );
+      if (!mounted) return;
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Registration failed: $e')));
     }
 
     _firstNameController.clear();
@@ -120,13 +127,16 @@ class _RegisterPageState extends State<RegisterPage> {
     final double topImageHeight = MediaQuery.of(context).size.height * 0.15;
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: AppBar(title: const Text('Register'), centerTitle: true,),
+      appBar: AppBar(title: const Text('Register'), centerTitle: true),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(8.0),
           child: ConstrainedBox(
             constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height - AppBar().preferredSize.height - MediaQuery.of(context).padding.top,
+              minHeight:
+                  MediaQuery.of(context).size.height -
+                  AppBar().preferredSize.height -
+                  MediaQuery.of(context).padding.top,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -142,7 +152,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Text('Register', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                const Text(
+                  'Register',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
                 const SizedBox(height: 18),
                 Column(
                   children: [
@@ -181,7 +194,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         isDense: true,
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _obscurePassword ? Icons.visibility : Icons.visibility_off,
+                            _obscurePassword
+                                ? Icons.visibility
+                                : Icons.visibility_off,
                           ),
                           onPressed: () {
                             setState(() {
@@ -201,11 +216,14 @@ class _RegisterPageState extends State<RegisterPage> {
                         isDense: true,
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
+                            _obscureConfirmPassword
+                                ? Icons.visibility
+                                : Icons.visibility_off,
                           ),
                           onPressed: () {
                             setState(() {
-                              _obscureConfirmPassword = !_obscureConfirmPassword;
+                              _obscureConfirmPassword =
+                                  !_obscureConfirmPassword;
                             });
                           },
                         ),
@@ -249,12 +267,18 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       onPressed: _register,
-                      child: const Text('Register', style: TextStyle(fontSize: 18)),
+                      child: const Text(
+                        'Register',
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 30),
-                const Text("Already have an account?", style: TextStyle(fontSize: 19)),
+                const Text(
+                  "Already have an account?",
+                  style: TextStyle(fontSize: 19),
+                ),
                 const SizedBox(height: 25),
                 Center(
                   child: SizedBox(
@@ -269,7 +293,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         ),
                       ),
                       onPressed: _goToLogin,
-                      child: const Text('Login', style: TextStyle(fontSize: 18)),
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(fontSize: 18),
+                      ),
                     ),
                   ),
                 ),

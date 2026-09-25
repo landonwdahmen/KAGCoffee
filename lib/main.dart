@@ -21,15 +21,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  // Activate App Check with the Play Integrity provider.
+  // Development configuration: retain the existing App Check debug provider.
   await FirebaseAppCheck.instance.activate(
     androidProvider: AndroidProvider.debug,
   );
-
-  // Optional: Print the token to verify if needed.
-  var tokenResult = await FirebaseAppCheck.instance.getToken();
-  // ignore: avoid_print
-  print("App Check token: $tokenResult");
 
   runApp(const MyApp());
 }
@@ -42,12 +37,12 @@ class MyApp extends StatelessWidget {
       title: 'KagCoffee',
       initialRoute: '/',
       theme: ThemeData(
-        scaffoldBackgroundColor: const Color(0xFFF5F5DC), // Light beige background
+        scaffoldBackgroundColor: const Color(
+          0xFFF5F5DC,
+        ), // Light beige background
         primaryColor: const Color(0xFF800000), // Maroon primary color
         elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.white,
-          ),
+          style: ElevatedButton.styleFrom(foregroundColor: Colors.white),
         ),
       ),
       routes: {
@@ -77,10 +72,13 @@ class MyApp extends StatelessWidget {
           } else {
             // If no valid postId is provided, show an error page.
             return MaterialPageRoute(
-              builder: (context) => Scaffold(
-                appBar: AppBar(title: const Text("Error")),
-                body: const Center(child: Text("No valid post ID provided.")),
-              ),
+              builder:
+                  (context) => Scaffold(
+                    appBar: AppBar(title: const Text("Error")),
+                    body: const Center(
+                      child: Text("No valid post ID provided."),
+                    ),
+                  ),
             );
           }
         }
