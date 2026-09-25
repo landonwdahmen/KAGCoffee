@@ -74,7 +74,7 @@ linux/, web/, windows/ Additional platform scaffolding
 - Profile email edits update Firestore separately from Firebase Authentication; account lookup still depends on the Auth email. Password changes may require recent sign-in.
 - The first-like path for a newly created post and checkout submission/error handling need further functional hardening.
 - Deployed Firestore access rules, indexes, and backend availability have not been audited or changed.
-- Earlier versions could save passwords and card details in Firestore and print sensitive data. This source cleanup prevents those writes/logs going forward; it does not remove existing backend records or historical logs. Any historical data needs a separate authorized review.
+- Security/privacy cleanup removed legacy sensitive-data persistence and debug logging; historical backend data was outside the scope of the repository cleanup.
 - The existing screenshots document the earlier prototype. In particular, the checkout screenshot shows the former card-entry UI; the current checkout has no card inputs. Screenshots are retained as project history, not proof of the current UI or platform support.
 
 ## Screenshots
