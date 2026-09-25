@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'footer.dart';
 
 class BagelDiscPage extends StatelessWidget {
@@ -8,13 +7,9 @@ class BagelDiscPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String? currentUserId = FirebaseAuth.instance.currentUser?.uid;
     final double headerHeight = MediaQuery.of(context).size.height * 0.15;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bagel Discussions'),
-        centerTitle: true,
-      ),
+      appBar: AppBar(title: const Text('Bagel Discussions'), centerTitle: true),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -44,11 +39,12 @@ class BagelDiscPage extends StatelessWidget {
             const SizedBox(height: 20),
             // Display posts in Cards.
             StreamBuilder<QuerySnapshot>(
-              stream: FirebaseFirestore.instance
-                  .collection('posts')
-                  .where('topic', isEqualTo: 'Bagels')
-                  .orderBy('timestamp', descending: true)
-                  .snapshots(),
+              stream:
+                  FirebaseFirestore.instance
+                      .collection('posts')
+                      .where('topic', isEqualTo: 'Bagels')
+                      .orderBy('timestamp', descending: true)
+                      .snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) return const CircularProgressIndicator();
                 final posts = snapshot.data!.docs;
@@ -58,11 +54,8 @@ class BagelDiscPage extends StatelessWidget {
                   itemCount: posts.length,
                   itemBuilder: (context, index) {
                     var post = posts[index];
-                    final Map<String, dynamic> data = post.data() as Map<String, dynamic>;
-                    final List<dynamic> likedBy = data.containsKey('likedBy')
-                        ? List.from(data['likedBy'])
-                        : [];
-                    final bool hasLiked = currentUserId != null && likedBy.contains(currentUserId);
+                    final Map<String, dynamic> data =
+                        post.data() as Map<String, dynamic>;
                     return InkWell(
                       onTap: () {
                         Navigator.pushNamed(
@@ -83,16 +76,19 @@ class BagelDiscPage extends StatelessWidget {
                                     ? 'Anonymous'
                                     : (data['userScreenName'] ?? 'Anonymous'),
                                 style: const TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.grey),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.grey,
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 8),
                               Text(
                                 data['title'] ?? 'No Title',
                                 style: const TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                               const SizedBox(height: 8),
@@ -109,7 +105,7 @@ class BagelDiscPage extends StatelessWidget {
                                   // Your like button code here.
                                   const SizedBox.shrink(),
                                 ],
-                              )
+                              ),
                             ],
                           ),
                         ),
@@ -118,7 +114,7 @@ class BagelDiscPage extends StatelessWidget {
                   },
                 );
               },
-            )
+            ),
           ],
         ),
       ),

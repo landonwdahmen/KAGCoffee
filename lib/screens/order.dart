@@ -3,7 +3,7 @@ import 'footer.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage({super.key});
-  
+
   @override
   State<OrderPage> createState() => _OrderPageState();
 }
@@ -12,10 +12,6 @@ class _OrderPageState extends State<OrderPage> {
   int _coffeeCount = 0;
   int _bagelCount = 0;
   final TextEditingController _commentsController = TextEditingController();
-
-  double getTotalPrice() {
-    return _coffeeCount * 2.99 + _bagelCount * 1.99;
-  }
 
   void _incrementCoffee() {
     setState(() {
@@ -52,36 +48,22 @@ class _OrderPageState extends State<OrderPage> {
       );
       return;
     }
-    double total = getTotalPrice();
     String comments = _commentsController.text.trim();
-    List<String> orderItems = [];
-    if (_coffeeCount > 0) {
-      orderItems.add("$_coffeeCount Black Coffee(s) (\$${(2.99 * _coffeeCount).toStringAsFixed(2)})");
-    }
-    if (_bagelCount > 0) {
-      orderItems.add("$_bagelCount Plain Bagel(s) (\$${(1.99 * _bagelCount).toStringAsFixed(2)})");
-    }
-    String orderSummary = orderItems.join(" & ");
-    String message = "Order placed: $orderSummary\nTotal: \$${total.toStringAsFixed(2)}";
-    if (comments.isNotEmpty) {
-      message += "\nComments: $comments";
-    };
-    
-    
-
-     // In _placeOrder(), replace the existing navigation call with:
-    Navigator.pushReplacementNamed(context, '/checkout', arguments: {
-      'coffeeCount': _coffeeCount,
-      'bagelCount': _bagelCount,
-      'comments': comments,
-    });
+    Navigator.pushReplacementNamed(
+      context,
+      '/checkout',
+      arguments: {
+        'coffeeCount': _coffeeCount,
+        'bagelCount': _bagelCount,
+        'comments': comments,
+      },
+    );
     // Clear the order details (if desired)
     setState(() {
       _coffeeCount = 0;
       _bagelCount = 0;
     });
     _commentsController.clear();
-  
   }
 
   @override
@@ -93,14 +75,16 @@ class _OrderPageState extends State<OrderPage> {
   @override
   Widget build(BuildContext context) {
     // Increase the header font size by using copyWith on titleLarge.
-    final TextStyle coffeeHeaderStyle =
-        Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 26);
-    final TextStyle bagelHeaderStyle =
-        Theme.of(context).textTheme.titleLarge!.copyWith(fontSize: 26);
+    final TextStyle coffeeHeaderStyle = Theme.of(
+      context,
+    ).textTheme.titleLarge!.copyWith(fontSize: 26);
+    final TextStyle bagelHeaderStyle = Theme.of(
+      context,
+    ).textTheme.titleLarge!.copyWith(fontSize: 26);
 
     final double headerHeight = MediaQuery.of(context).size.height * 0.15;
     return Scaffold(
-      appBar: AppBar(title: const Text("Order"), centerTitle: true,),
+      appBar: AppBar(title: const Text("Order"), centerTitle: true),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
@@ -110,9 +94,7 @@ class _OrderPageState extends State<OrderPage> {
                 width: MediaQuery.of(context).size.width,
                 height: headerHeight,
                 color: Colors.brown,
-                child: Center(
-                  child: Image.asset("assets/kagtransparent.png"),
-                ),
+                child: Center(child: Image.asset("assets/kagtransparent.png")),
               ),
               const SizedBox(height: 26),
               const Center(
@@ -128,12 +110,7 @@ class _OrderPageState extends State<OrderPage> {
                 child: Column(
                   children: [
                     // Coffee Section Header (enlarged).
-                    Center(
-                      child: Text(
-                        "Coffee",
-                        style: coffeeHeaderStyle,
-                      ),
-                    ),
+                    Center(child: Text("Coffee", style: coffeeHeaderStyle)),
                     const SizedBox(height: 18),
                     // Black Coffee row.
                     Row(
@@ -154,7 +131,10 @@ class _OrderPageState extends State<OrderPage> {
                               icon: const Icon(Icons.remove),
                               onPressed: _decrementCoffee,
                             ),
-                            Text("$_coffeeCount", style: const TextStyle(fontSize: 20)),
+                            Text(
+                              "$_coffeeCount",
+                              style: const TextStyle(fontSize: 20),
+                            ),
                             IconButton(
                               icon: const Icon(Icons.add),
                               onPressed: _incrementCoffee,
@@ -167,22 +147,13 @@ class _OrderPageState extends State<OrderPage> {
                     const Divider(thickness: 2),
                     const SizedBox(height: 20),
                     // Bagel Section Header (enlarged).
-                    Center(
-                      child: Text(
-                        "Bagel",
-                        style: bagelHeaderStyle,
-                      ),
-                    ),
+                    Center(child: Text("Bagel", style: bagelHeaderStyle)),
                     const SizedBox(height: 18),
                     // Plain Bagel row with new bagel icon from assets.
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          "assets/bagel.png",
-                          height: 40,
-                          width: 40,
-                        ),
+                        Image.asset("assets/bagel.png", height: 40, width: 40),
                         const SizedBox(width: 8),
                         Expanded(
                           child: Text(
@@ -197,7 +168,10 @@ class _OrderPageState extends State<OrderPage> {
                               icon: const Icon(Icons.remove),
                               onPressed: _decrementBagel,
                             ),
-                            Text("$_bagelCount", style: const TextStyle(fontSize: 20)),
+                            Text(
+                              "$_bagelCount",
+                              style: const TextStyle(fontSize: 20),
+                            ),
                             IconButton(
                               icon: const Icon(Icons.add),
                               onPressed: _incrementBagel,
@@ -228,7 +202,9 @@ class _OrderPageState extends State<OrderPage> {
                         height: 50,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xFF800000), // Maroon background.
+                            backgroundColor: const Color(
+                              0xFF800000,
+                            ), // Maroon background.
                             foregroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.zero,

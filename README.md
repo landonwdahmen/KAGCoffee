@@ -52,7 +52,7 @@ flutter test
 
 The six widget tests exercise login controls, empty-input validation, password visibility, navigation to registration, registration password-mismatch validation, and simulated checkout totals without initializing Firebase. They do not verify live authentication, Firestore permissions, or end-to-end ordering.
 
-Local validation uses Flutter **3.29.3** and Dart **3.7.2**. Dependency resolution and the widget tests pass. Repository-wide analysis still reports existing warnings/lints (including filenames, unused code, and async UI context use). CI is deferred until those findings are resolved; this repository does not currently have a passing analyzer gate.
+Local validation uses Flutter **3.29.3** and Dart **3.7.2**. Dependency resolution and all six widget tests pass. Analysis reports no errors or warnings, with 26 informational lints remaining (filenames, async UI context use, constructor parameters, and widget argument order). Plain `flutter analyze` exits nonzero because it treats informational lints as fatal by default. The GitHub Actions workflow runs on pushes to `main` and pull requests using the same Flutter version, with `flutter pub get`, `flutter analyze --no-fatal-infos`, and `flutter test`. Informational lints remain visible; errors, warnings, and test failures fail CI.
 
 An Android debug build was attempted but stopped while Gradle was waiting on a dependency download. APK generation and on-device behavior have not been verified in this cleanup pass.
 
