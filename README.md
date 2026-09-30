@@ -1,5 +1,7 @@
 # KAG’s Coffee & Bagels
 
+[![Flutter CI](https://github.com/landonwdahmen/KAGCoffee/actions/workflows/ci.yml/badge.svg)](https://github.com/landonwdahmen/KAGCoffee/actions/workflows/ci.yml)
+
 A three-person academic Flutter/Firebase prototype for a fictional café, developed for **SE330 Project 2** by **Carter Hanson, Landon Dahmen, and Brandon Reuss**. The project combines café ordering with community discussions; this repository represents the team's work.
 
 ## Features
