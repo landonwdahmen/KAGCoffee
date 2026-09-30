@@ -56,7 +56,7 @@ The six widget tests exercise login controls, empty-input validation, password v
 
 Local validation uses Flutter **3.29.3** and Dart **3.7.2**. Dependency resolution and all six widget tests pass. Analysis reports no errors or warnings, with 26 informational lints remaining (filenames, async UI context use, constructor parameters, and widget argument order). Plain `flutter analyze` exits nonzero because it treats informational lints as fatal by default. The GitHub Actions workflow runs on pushes to `main` and pull requests using the same Flutter version, with `flutter pub get`, `flutter analyze --no-fatal-infos`, and `flutter test`. Informational lints remain visible; errors, warnings, and test failures fail CI.
 
-An Android debug build was attempted but stopped while Gradle was waiting on a dependency download. APK generation and on-device behavior have not been verified in this cleanup pass.
+Android debug APK generation and launch were successfully verified on an Android emulator. Registration/login and navigation through the current Order and simulated Checkout screens were manually exercised. The complete backend and order-submission flow have not been verified end to end.
 
 ## Structure
 
@@ -77,7 +77,7 @@ linux/, web/, windows/ Additional platform scaffolding
 - The first-like path for a newly created post and checkout submission/error handling need further functional hardening.
 - Deployed Firestore access rules, indexes, and backend availability have not been audited or changed.
 - Security/privacy cleanup removed legacy sensitive-data persistence and debug logging; historical backend data was outside the scope of the repository cleanup.
-- The existing screenshots document the earlier prototype. In particular, the checkout screenshot shows the former card-entry UI; the current checkout has no card inputs. Screenshots are retained as project history, not proof of the current UI or platform support.
+- The checkout screenshot (`screenshots/checkout.png`) has been replaced with a current screenshot showing the simulated checkout without card inputs. Most other screenshots originated from the earlier prototype and remain illustrative rather than proof of current backend or platform support.
 
 ## Screenshots
 
